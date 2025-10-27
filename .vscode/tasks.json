@@ -1,0 +1,104 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "CMake Build",
+            "detail": "CMake project build. Targets ./build dir.",
+            "type": "shell",
+            "command": "cmake",
+            "args": ["--build", "build"],
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "group": "build",
+                "panel": "shared",
+                "revealProblems": "onProblem",
+                "clear": true,
+                "showReuseMessage": false
+            },
+            "icon": {
+                "color": "terminal.ansiBlue",
+                "id": "wrench"
+            }
+        },
+        // -DCMAKE_TOOLCHAIN_FILE="/home/ajay/Project/JSONpp/cmake/toolchain/clang-linux-x86_64.toolchain.cmake"
+        {
+            "label": "CMake Config",
+            "detail": "Initial project config: Clang Linux x86_64",
+            "type": "shell",
+            "group": "build",
+            "command": "cmake",
+            "args": [
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_EXPORT_COMPILE_COMMANDS=TRUE",
+                "-DCMAKE_TOOLCHAIN_FILE=\"/home/ajay/Project/Text-Buffer/cmake/toolchain/clang-linux-x86_64.toolchain.cmake\"",
+                "-Wdev",
+                "-G",
+                "Ninja",
+                "-B",
+                "${workspaceFolder}/build",
+                "-S",
+                "${workspaceFolder}"
+            ],
+            //    -S /home/ajay/Repos/jparse -B /home/ajay/Repos/jparse/build -G Ninja
+            "presentation": {
+                "group": "build",
+                "panel": "shared",
+                "revealProblems": "onProblem",
+                "clear": false,
+                "showReuseMessage": false
+            },
+            "icon": {
+                "color": "terminal.ansiMagenta",
+                "id": "sync"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "rm build",
+            "detail": "Force remove the current build entirely.",
+            "command": "rm",
+            "type": "shell",
+            "args": ["-Rfv", "${workspaceFolder}/build"],
+            "group": "build",
+            "presentation": {
+                "group": "build",
+                "panel": "shared",
+                "clear": false,
+                "showReuseMessage": false
+            },
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "icon": {
+                "id": "trashcan",
+                "color": "terminal.ansiRed"
+            }
+        },
+
+        {
+            "label": "exec sandbox",
+            "detail": "Executes the sandbox test executable.",
+            "command": "./build/tests/sandbox",
+            "args": [],
+            "group": "test",
+            "presentation": {
+                "echo": false,
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "group": "sandbox",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "icon": {
+                "id": "run",
+                "color": "terminal.ansiGreen"
+            }
+        }
+    ]
+}
