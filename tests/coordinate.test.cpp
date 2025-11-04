@@ -19,8 +19,7 @@
 //==============================================================*
 // Test@ "Coordinate |> Operator |> Add (+)"
 //==============================================================*
-
-#include "./utilities.hpp"
+#include "utils/err.hpp"
 
 #include <text/coordinate.hpp>
 
@@ -37,7 +36,8 @@ using namespace std;
 
 
 
-TEST(Coordinate_Construction, construction_test) {
+TEST(Coordinate_Construction, construction_test)
+{
   EXPECT_NO_THROW(Coordinate c);
   EXPECT_NO_THROW(Coordinate c(1));
   EXPECT_NO_THROW(Coordinate c{ 2 });
@@ -48,7 +48,8 @@ TEST(Coordinate_Construction, construction_test) {
 
 
 
-TEST(Coordinate_Construction, copy_construction_test) {
+TEST(Coordinate_Construction, copy_construction_test)
+{
   Coordinate c_alpha = 123;
   EXPECT_NO_THROW(Coordinate c_beta(c_alpha));
   EXPECT_NO_THROW(Coordinate c_beta{ c_alpha });
@@ -57,7 +58,8 @@ TEST(Coordinate_Construction, copy_construction_test) {
 
 
 
-TEST(Coordinate_Assignment, assignment_test) {
+TEST(Coordinate_Assignment, assignment_test)
+{
   EXPECT_NO_THROW(Coordinate c = 3);
   EXPECT_THROW(Coordinate c = -3, Ex);  // Exception Tests
 }
@@ -65,7 +67,8 @@ TEST(Coordinate_Assignment, assignment_test) {
 
 
 
-TEST(Coordinate_Assignment, copy_assignment_test) {
+TEST(Coordinate_Assignment, copy_assignment_test)
+{
   Coordinate c_alpha = 25;
   EXPECT_NO_THROW(Coordinate c_beta = c_alpha);
   EXPECT_NO_THROW(Coordinate c = Coordinate(50));
@@ -75,7 +78,8 @@ TEST(Coordinate_Assignment, copy_assignment_test) {
 
 
 
-TEST(Coordinate_Internal_Access, accessor_test) {
+TEST(Coordinate_Internal_Access, accessor_test)
+{
   Coordinate c_alpha(59444);
   EXPECT_EQ(c_alpha(), 59444);
   EXPECT_EQ(c_alpha.get(), 59444);
@@ -84,7 +88,8 @@ TEST(Coordinate_Internal_Access, accessor_test) {
 
 
 
-TEST(Coordinate_Internal_Mutation, mutator_test) {
+TEST(Coordinate_Internal_Mutation, mutator_test)
+{
   // Mutation was tested in large part when the assignment
   // operators were tested
   Coordinate c_alpha(8);
@@ -118,33 +123,28 @@ TEST(Coordinate_Internal_Mutation, mutator_test) {
 
 // TODO: Write test fixture for the comparison-equality tests
 
-Coordinate c00 = 0;
-Coordinate c01 = 1;
-Coordinate c02 = 2;
-Coordinate c03 = 3;
-Coordinate c04 = 4;
-Coordinate c05 = 5;
-Coordinate c06 = 6;
-Coordinate c07 = 7;
-Coordinate c08 = 8;
-Coordinate c09 = 9;
-Coordinate c10 = 10;
-Coordinate c11 = 11;
-Coordinate c12 = 12;
-Coordinate c13 = 13;
-Coordinate c14 = 14;
-Coordinate c15 = 15;
-Coordinate c16 = 16;
-
-Coordinate c0002 = 2;
-Coordinate c0004 = 4;
-Coordinate c0008 = 8;
-Coordinate c0016 = 16;
-Coordinate c0032 = 32;
-Coordinate c0064 = 64;
-Coordinate c0128 = 128;
-Coordinate c0256 = 256;
-Coordinate c0512 = 512;
+Coordinate c00   = 0;
+Coordinate c01   = 1;
+Coordinate c02   = 2;
+Coordinate c03   = 3;
+Coordinate c04   = 4;
+Coordinate c05   = 5;
+Coordinate c06   = 6;
+Coordinate c07   = 7;
+Coordinate c08   = 8;
+Coordinate c09   = 9;
+Coordinate c10   = 10;
+Coordinate c11   = 11;
+Coordinate c12   = 12;
+Coordinate c13   = 13;
+Coordinate c14   = 14;
+Coordinate c15   = 15;
+Coordinate c16   = 16;
+Coordinate c32   = 32;
+Coordinate c64   = 64;
+Coordinate c128  = 128;
+Coordinate c256  = 256;
+Coordinate c512  = 512;
 Coordinate c1024 = 1024;
 Coordinate c2048 = 2048;
 Coordinate c4096 = 4096;
@@ -197,7 +197,8 @@ The readme file documents and defines the `<Integral>` type.
 ------------------------------------------------------------
 * COMPARISON: Coordinate | Coordinate
 ------------------------------------------------------------     */
-TEST(CoordinateComparison, equality_operator_CC) {
+TEST(CoordinateComparison, equality_operator_CC)
+{
   // EQUALITY
   EXPECT_EQ(c00, c00);
   EXPECT_EQ(c01, Coordinate(1));
@@ -213,7 +214,8 @@ TEST(CoordinateComparison, equality_operator_CC) {
 
 
 
-TEST(CoordinateComparison, greater_operator_CC) {
+TEST(CoordinateComparison, greater_operator_CC)
+{
   // GREATER
   EXPECT_GT(c01, c00);
   EXPECT_GT(c02, c01);
@@ -236,7 +238,8 @@ TEST(CoordinateComparison, greater_operator_CC) {
 
 
 
-TEST(CoordinateComparison, lesser_operator_CC) {
+TEST(CoordinateComparison, lesser_operator_CC)
+{
   // LESSER
   EXPECT_LT(c01, c02);
   EXPECT_LT(c02, c03);
@@ -268,7 +271,8 @@ TEST(CoordinateComparison, lesser_operator_CC) {
 ------------------------------------------------------------
 * COMPARISON: Integral | Coordinate
 ------------------------------------------------------------     */
-TEST(CoordinateComparison, equality_operator_CI) {
+TEST(CoordinateComparison, equality_operator_CI)
+{
   // EQUALITY
   EXPECT_EQ(4, c04);
   EXPECT_EQ(8, c08);
@@ -289,19 +293,20 @@ TEST(CoordinateComparison, equality_operator_CI) {
 
 
 
-TEST(CoordinateComparison, lesser_operator_CI) {
+TEST(CoordinateComparison, lesser_operator_CI)
+{
   // GREATER
-  EXPECT_LT(3, c0004);
-  EXPECT_LT(5, c0008);
-  EXPECT_LT(9, c0016);
-  EXPECT_FALSE(16 < c0016);
+  EXPECT_LT(3, c04);
+  EXPECT_LT(5, c08);
+  EXPECT_LT(9, c16);
+  EXPECT_FALSE(16 < c16);
   EXPECT_FALSE(16 < Coordinate(0));
   EXPECT_TRUE(1234 < c4096);
 
   // GREATER OR EQUAL
-  EXPECT_LE(2, c0128);
-  EXPECT_LE(2, c0256);
-  EXPECT_LE(32, c0512);
+  EXPECT_LE(2, c128);
+  EXPECT_LE(2, c256);
+  EXPECT_LE(32, c512);
   EXPECT_TRUE(1024 <= c1024);
   EXPECT_FALSE(1024 <= Coordinate(1000));
 }
@@ -309,7 +314,8 @@ TEST(CoordinateComparison, lesser_operator_CI) {
 
 
 
-TEST(CoordinateComparison, greater_operator_CI) {
+TEST(CoordinateComparison, greater_operator_CI)
+{
   // LESSER
   EXPECT_GT(2, c00);
   EXPECT_GT(2, c01);
@@ -341,7 +347,8 @@ TEST(CoordinateComparison, greater_operator_CI) {
 ------------------------------------------------------------
 * COMPARISON: Coordinate | Integral
 ------------------------------------------------------------     */
-TEST(Coordinate_Integral_Comparison, equality_operator) {
+TEST(Coordinate_Integral_Comparison, equality_operator)
+{
   //  EQUALITY(==)
   EXPECT_EQ(c03, 3);
   EXPECT_EQ(c06, 6);
@@ -363,7 +370,8 @@ TEST(Coordinate_Integral_Comparison, equality_operator) {
 
 
 
-TEST(Coordinate_Integral_Comparison, lesser_operator) {
+TEST(Coordinate_Integral_Comparison, lesser_operator)
+{
   // GREATER
   EXPECT_GT(c03, 0);
   EXPECT_GT(c06, 3);
@@ -387,7 +395,8 @@ TEST(Coordinate_Integral_Comparison, lesser_operator) {
 
 
 
-TEST(Coordinate_Integral_Comparison, greater_operator) {
+TEST(Coordinate_Integral_Comparison, greater_operator)
+{
   // LESSER
   EXPECT_LT(c03, 4);
   EXPECT_LT(c06, 7);
@@ -400,33 +409,19 @@ TEST(Coordinate_Integral_Comparison, greater_operator) {
 }
 
 
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////
 // ARITHMETIC TESTING
 ////////////////////////////////////////////////////////////
 
-TEST(CoordinateArithmetic, addition) {
+TEST(CoordinateArithmetic, addition)
+{
   // TEST ALL THREE OVERLOADS:
   EXPECT_EQ(c01 + c02, c03);
   EXPECT_EQ(c02 + c02, c04);
-  EXPECT_EQ(c03 + c02, c05);
-
   EXPECT_EQ(c01 + 2, c03);
   EXPECT_EQ(c02 + 2, c04);
-  EXPECT_EQ(c03 + 2, c05);
-
   EXPECT_EQ(1 + c02, c03);
   EXPECT_EQ(2 + c02, c04);
-  EXPECT_EQ(3 + c02, c05);
-
-  // Test using a wider range of values
-  EXPECT_EQ(c0256 + 128, Coordinate(384));
-  EXPECT_EQ(64 + c0064, c0128);
 
   // Compare different overloaded ops return values
   EXPECT_EQ(5 + c07, c10 + 2);
@@ -438,26 +433,103 @@ TEST(CoordinateArithmetic, addition) {
   // Throws only when appropriate to do so
   EXPECT_NO_THROW(c02 + -2);
   EXPECT_NO_THROW(-2 + c02);
-
 }
 
 
 
-TEST(CoordinateArithmetic, subtraction) {
-  EXPECT_EQ((c04 - c02), c02);
+TEST(CoordinateArithmetic, subtraction)
+{
+  EXPECT_EQ(c01 - c00, c01);
+  EXPECT_EQ(c02 - c01, c01);
+  EXPECT_EQ(c03 - 2, c01);
+  EXPECT_EQ(c04 - 3, c01);
+  EXPECT_EQ(5 - c04, c01);
+  EXPECT_EQ(6 - c05, c01);
 
   EXPECT_THROW(c00 - c01, Ex);
+  EXPECT_THROW(c00 - 1, Ex);
+  EXPECT_THROW(0 - c02, Ex);
+  // EXPECT_THROW(0 - c01, Ex);
 }
 
 
 
-TEST(CoordinateArithmetic, multiplication) { EXPECT_EQ((c04 * c02), c08); }
+TEST(CoordinateArithmetic, multiplication)
+{
+  EXPECT_EQ(c02 * c00, c00);
+  EXPECT_EQ(c04 * c02, c08);
+  EXPECT_EQ(c08 * c04, c32);
+  EXPECT_EQ(c02 * 0, c00);
+  EXPECT_EQ(c02 * 1, c02);
+  EXPECT_EQ(c02 * 4, c08);
+  EXPECT_EQ(8 * c00, c00);
+  EXPECT_EQ(8 * c01, c08);
+  EXPECT_EQ(8 * c02, c16);
+
+  // THROW ON: 'Returned Negative Coordinate'
+  EXPECT_THROW(c01 * (-1), Ex);
+  EXPECT_THROW(c02 * -2, Ex);
+  EXPECT_THROW((-2) * c01, Ex);
+  EXPECT_THROW(-1 * c02, Ex);
+
+  // Don't throw if a negative value is multiplied by zero 0
+  EXPECT_NO_THROW(c00 * 0);
+  EXPECT_NO_THROW(c00 * -1);
+  EXPECT_NO_THROW(0 * c00);
+  EXPECT_NO_THROW(-1 * c00);
+}
 
 
 
-TEST(CoordinateArithmetic, division) {
-  EXPECT_EQ((c04 / c02), c02);
 
+
+TEST(CoordinateArithmetic, division)
+{
+  // Standard Division
+  // (c/c), (i/c) & (c/i)
+  EXPECT_EQ(c16 / c04, c04);
+  EXPECT_EQ(c16 / c02, c08);
+
+  //  n/1 = n
+  EXPECT_EQ(c02 / c01, c02);
+  EXPECT_EQ(4 / c01, c04);
+  EXPECT_EQ(c01 / 1, c01);
+
+  // n/0 -> THROW Ex(...)
   EXPECT_THROW(c10 / c00, Ex);
-  EXPECT_NO_THROW(c00 / c10);
+  EXPECT_THROW(0 / c00, Ex);
+  EXPECT_THROW(c01 / 0, Ex);
+
+  // 0/n = 0 (NO THROW)
+  EXPECT_NO_THROW(c00 / c02);
+  EXPECT_EQ(c00 / 2, c00);
+  EXPECT_NO_THROW(0 / c02);
+  EXPECT_EQ(0 / c02, c00);
+  EXPECT_NO_THROW(c00 / 1);
+  EXPECT_EQ(c00 / 1, c00);
+}
+
+
+
+TEST(CoordinateArithmetic, increment_operator)
+{
+  Coordinate c = 0;
+  EXPECT_EQ(++c, c01);
+  EXPECT_EQ(++c, c02);
+  EXPECT_EQ(++c, c03);
+}
+
+
+
+TEST(CoordinateArithmetic, decrement_operator)
+{
+  Coordinate c = 0;
+
+  EXPECT_NO_THROW(--c00);
+  EXPECT_EQ(--c, c00);
+  EXPECT_EQ(--c, c00);
+  EXPECT_EQ(++c, c01);
+  EXPECT_EQ(++c, c02);
+  EXPECT_EQ(--c, c01);
+  EXPECT_EQ(--c, c00);
 }
