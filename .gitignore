@@ -1,5 +1,6 @@
 .gitignore
 .cache/
+.trash/
 
 # Ignore Build Files
 build/
