@@ -3,6 +3,7 @@
 #include <exception>
 #include <format>
 #include <iostream>
+#include <map>
 #include <source_location>
 #include <stdexcept>
 #include <string>
@@ -31,7 +32,8 @@ enum class E_ID
 /////////////////////////////////////////////////////////////////
 // TO STRING FUNCTIONS
 /////////////////////////////////////////////////////////////////
-inline std::string to_string(E_ID errorId) {
+inline std::string to_string(E_ID errorId)
+{
   // auto n = static_cast<std::underlying_type_t<ErrType>>(errType);
   switch (errorId) {
     case E_ID::OUT_OF_RANGE        : return "[OUT_OF_RANGE]";
@@ -49,9 +51,8 @@ inline std::string to_string(E_ID errorId) {
 
 namespace {
 
-  static const std::string clr(int&& code) {
-    return std::format("\033[0;38;5;{}m", code);
-  }
+  static const std::string clr(int &&code)
+  { return std::format("\033[0;38;5;{}m", code); }
 
   const std::string ESC   = "\033[0m";
   const std::string B     = "\033[1m";
@@ -73,8 +74,9 @@ namespace {
 
 
 inline std::vector<std::string> split_on_space(
- const std::string& input,
- size_t             max_length = 80) {
+ const std::string &input,
+ size_t             max_length = 80)
+{
   std::vector<std::string> result;
   size_t                   start = 0;
 
@@ -114,26 +116,26 @@ class Ex : public std::exception
   std::source_location loc;
   std::string          message;
 
-
-
-
  public:
   inline Ex(
-   const E_ID&          id,
-   const std::string&   msg,
+   const E_ID          &id,
+   const std::string   &msg,
    std::source_location loc = std::source_location::current())
    : id(id)
    , loc(loc)
-   , message(formatMesg(msg)) {}
+   , message(formatMesg(msg))
+  {}
 
 
-
-  inline const char* what() const noexcept override {
+  inline const char *what() const noexcept override
+  {
     std::string msg = std::format("{}", message);
     return message.c_str();
   }
 
-  std::string formatMesg(std::string msg) {
+
+  std::string formatMesg(std::string msg)
+  {
     std::string e_id    = to_string(id);
     std::string func    = loc.function_name();
     std::string file    = loc.file_name();
@@ -188,6 +190,14 @@ class Ex : public std::exception
      msg,
      HORZ);
   }
+};
+
+
+const std::map<const std::string, const Ex> Coordinate_Error{
+  { "Negative_Coordinate",
+   Ex(E_ID::OUT_OF_RANGE,     "Coordinate cannot be less than 0 (zero).")    },
+  { "Division_by_Zero",
+   Ex(E_ID::DIVISION_BY_ZERO, "Attempted to divide Coordinate by 0 (zero).") }
 };
 
 }
