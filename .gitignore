@@ -19,3 +19,20 @@ cmake_install.*
 # Sandbox
 sandbox.*
 *.sandbox.*
+# Ignore Build Files
+build/
+*/_deps/
+CMakeFiles
+CMakeCache.txt
+cmake_install.*
+
+# Config Files
+.vscode/settings.json
+.vscode/launch.json
+.vscode/cspell.json
+.clang-format
+.clangd
+
+# Sandbox
+sandbox.*
+*.sandbox.*
